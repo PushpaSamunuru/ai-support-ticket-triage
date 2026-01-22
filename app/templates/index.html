@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>AI Ticket Triage</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <h1>AI Support Ticket Triage</h1>
+
+  <form action="/submit" method="post" class="card">
+    <h2>Submit Ticket</h2>
+    <input name="title" placeholder="Title" required />
+    <textarea name="description" placeholder="Describe the issue..." required></textarea>
+    <button type="submit">Submit</button>
+  </form>
+
+  <h2>Tickets</h2>
+  {% for t in tickets %}
+    <div class="card">
+      <a href="/ticket/{{t.id}}"><b>#{{t.id}} {{t.title}}</b></a>
+      <p>Status: <b>{{t.status}}</b> | Risk: <b>{{t.risky}}</b></p>
+      <p>Intent: {{t.intent}} ({{"%.2f"|format(t.intent_confidence)}}) |
+         Urgency: {{t.urgency}} ({{"%.2f"|format(t.urgency_confidence)}})</p>
+    </div>
+  {% endfor %}
+</body>
+</html>

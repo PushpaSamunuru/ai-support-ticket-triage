@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Ticket {{ticket.id}}</title>
+  <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+  <a href="/">← Back</a>
+
+  <div class="card">
+    <h2>#{{ticket.id}} {{ticket.title}}</h2>
+    <p><b>Description:</b> {{ticket.description}}</p>
+    <p><b>AI Intent:</b> {{ticket.intent}} ({{"%.2f"|format(ticket.intent_confidence)}})</p>
+    <p><b>AI Urgency:</b> {{ticket.urgency}} ({{"%.2f"|format(ticket.urgency_confidence)}})</p>
+    <p><b>Risky:</b> {{ticket.risky}}</p>
+    <p><b>Suggested Reply:</b></p>
+    <pre>{{ticket.suggested_reply}}</pre>
+
+    <hr>
+
+    <h3>Human Override</h3>
+    <form action="/ticket/{{ticket.id}}/override" method="post">
+      <label>Intent</label>
+      <input name="intent" value="{{ticket.intent}}" />
+
+      <label>Urgency</label>
+      <input name="urgency" value="{{ticket.urgency}}" />
+
+      <label>Status</label>
+      <input name="status" value="{{ticket.status}}" />
+
+      <button type="submit">Save Override</button>
+    </form>
+
+    <p>Human override: <b>{{ticket.human_override}}</b></p>
+  </div>
+</body>
+</html>
